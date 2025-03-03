@@ -6,7 +6,7 @@
                 <button id="sidebarToggle" class="navbar-toggler" type="button">
                     <i class="bi bi-list"></i>
                 </button>
-                <a class="navbar-brand" href="#"><i class="bi bi-lightning-charge-fill"></i> Admin Panel</a>
+                <a id="gradient-text" class="navbar-brand" href="#"><i class="fa-solid fa-crown"></i>  TestNet KING</a>
                 <div class="ms-auto d-flex align-items-center">
                     <div class="dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">

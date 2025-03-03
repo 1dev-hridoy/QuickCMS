@@ -3,504 +3,908 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Admin Dashboard</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Modern Blog</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="./assets/css/main.styl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --light-bg: #ffffff;
+            --dark-text: #1e293b;
+            --light-text: #f8fafc;
+            --primary-color: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--dark-bg);
+            --text-color: var(--light-text);
+            --nav-glass: rgba(15, 23, 42, 0.7);
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--light-bg);
+            --text-color: var(--dark-text);
+            --nav-glass: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphic Navbar */
+        .navbar {
+            background: var(--nav-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-color) !important;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle, .search-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+            background: var(--glass-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+
+        .theme-toggle:hover, .search-toggle:hover {
+            transform: rotate(45deg);
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Swiper Styles */
+        .swiper {
+            width: 100%;
+            height: 60vh;
+            margin-bottom: 2rem;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper-slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+
+        /* Blog Post List */
+        .blog-post {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            gap: 2rem;
+            align-items: start;
+            cursor: pointer; /* Added cursor style */
+        }
+
+        .blog-post:hover .blog-image {
+            transform: scale(1.05); /* Added hover effect */
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .blog-image-wrapper {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-content {
+            flex: 1;
+            min-width: 0; /* Prevents text overflow issues */
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+        }
+
+        .post-title:hover {
+            color: var(--primary-color);
+        }
+
+        .post-description {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            color: var(--text-color);
+            opacity: 0.6;
+            font-size: 0.875rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--nav-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .swiper {
+                height: 40vh;
+            }
+
+            .blog-post {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+
+            .blog-image-wrapper {
+                width: 120px;
+                height: 120px;
+            }
+
+            .post-title {
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .post-description {
+                -webkit-line-clamp: 2;
+                font-size: 0.9rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .post-meta {
+                font-size: 0.8rem;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .blog-post {
+                gap: 1rem;
+            }
+
+            .blog-image-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+
+            .post-meta {
+                flex-wrap: wrap;
+                gap: 0.5rem 1rem;
+            }
+        }
+
+        /* Modal Styles */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-modal.show {
+            opacity: 1;
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .custom-modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            background: #ef4444;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .modal-description {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Search Modal Styles */
+        .search-modal .modal-content {
+            max-width: 600px;
+        }
+
+        .search-input-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid var(--glass-border);
+            background: var(--glass-bg);
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .search-suggestions {
+            margin-top: 1.5rem;
+        }
+
+        .suggestion-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .suggestions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .suggestion-item {
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            border-radius: 50px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .hashtag {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .recent-searches {
+            margin-top: 2rem;
+        }
+
+        .recent-search-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
+
+        .recent-search-item:hover {
+            color: var(--primary-color);
+        }
+
+        .recent-search-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-search-text {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .recent-search-remove {
+            color: var(--text-color);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .recent-search-remove:hover {
+            color: #ef4444;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+            }
+
+            .modal-image {
+                height: 300px;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-description {
+                font-size: 1rem;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
 </head>
-<body>
-    <!-- Overlay for mobile sidebar -->
-    <div class="overlay" id="sidebarOverlay"></div>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h3><i class="bi bi-lightning-charge-fill lightning"></i>Admin Panel</h3>
-        </div>
-        
-        <div class="sidebar-heading">Core</div>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">
-                    <i class="bi bi-speedometer2"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-        </ul>
-        
-        <div class="sidebar-heading">Interface</div>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-grid"></i>
-                    <span>Components</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-tools"></i>
-                    <span>Utilities</span>
-                </a>
-            </li>
-        </ul>
-        
-        <div class="sidebar-heading">Addons</div>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-file-earmark"></i>
-                    <span>Pages</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-bar-chart"></i>
-                    <span>Charts</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-table"></i>
-                    <span>Tables</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Content Wrapper -->
-    <div class="content-wrapper">
-        <!-- Top Navbar -->
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <button id="sidebarToggle" class="navbar-toggler" type="button">
-                    <i class="bi bi-list"></i>
-                </button>
-                <a class="navbar-brand" href="#"><i class="bi bi-lightning-charge-fill"></i> Admin Panel</a>
-                <div class="ms-auto d-flex align-items-center">
-                    <div class="dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="container-fluid p-4 content-main">
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0">Dashboard</h1>
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                    <i class="bi bi-download me-1"></i> Generate Report
-                </a>
-            </div>
-
-            <!-- Stats Cards -->
-            <div class="row">
-                <!-- Earnings (Monthly) Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card primary h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <div class="text-xs text-uppercase mb-1 text-primary">Earnings (Monthly)</div>
-                                    <div class="h5 mb-0 font-weight-bold">$40,000</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="bi bi-calendar stat-icon text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Earnings (Annual) Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card success h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <div class="text-xs text-uppercase mb-1 text-success">Earnings (Annual)</div>
-                                    <div class="h5 mb-0 font-weight-bold">$215,000</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="bi bi-currency-dollar stat-icon text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tasks Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card info h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <div class="text-xs text-uppercase mb-1 text-info">Tasks</div>
-                                    <div class="h5 mb-0 font-weight-bold">50%</div>
-                                    <div class="progress mt-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="bi bi-list-check stat-icon text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pending Requests Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card warning h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <div class="text-xs text-uppercase mb-1 text-warning">Pending Requests</div>
-                                    <div class="h5 mb-0 font-weight-bold">18</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="bi bi-chat-left-text stat-icon text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Row -->
-            <div class="row">
-                <!-- Area Chart -->
-                <div class="col-xl-8 col-lg-7">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold">Earnings Overview</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-area">
-                                <canvas id="myAreaChart" height="320"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pie Chart -->
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold">Revenue Sources</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-pie pt-4 pb-2">
-                                <canvas id="myPieChart" height="245"></canvas>
-                            </div>
-                            <div class="mt-4 text-center small">
-                                <span class="me-2">
-                                    <i class="bi bi-circle-fill text-primary"></i> Direct
-                                </span>
-                                <span class="me-2">
-                                    <i class="bi bi-circle-fill text-success"></i> Social
-                                </span>
-                                <span class="me-2">
-                                    <i class="bi bi-circle-fill text-info"></i> Referral
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Row -->
-            <div class="row">
-                <!-- Projects Card -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold">Projects</h6>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="small font-weight-bold">Server Migration <span class="float-end">20%</span></h4>
-                            <div class="progress mb-4">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h4 class="small font-weight-bold">Sales Tracking <span class="float-end">40%</span></h4>
-                            <div class="progress mb-4">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h4 class="small font-weight-bold">Customer Database <span class="float-end">60%</span></h4>
-                            <div class="progress mb-4">
-                                <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h4 class="small font-weight-bold">Payout Details <span class="float-end">80%</span></h4>
-                            <div class="progress mb-4">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h4 class="small font-weight-bold">Account Setup <span class="float-end">Complete!</span></h4>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activities -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold">Recent Activities</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td><span class="badge bg-success">Active</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td><span class="badge bg-warning">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td><span class="badge bg-success">Active</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td><span class="badge bg-danger">Inactive</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td><span class="badge bg-success">Active</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+<body data-theme="dark">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">BlogSpace</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button class="search-toggle" id="searchToggle">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="bi bi-moon-fill"></i>
+                    </button>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <span>Copyright &copy; Your Website 2023</span>
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f" alt="Tech">
+                <div class="swiper-slide-content">
+                    <h2>Future of Technology</h2>
+                    <p>Exploring the latest innovations in tech</p>
+                </div>
             </div>
-        </footer>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1551410224-699683e15636" alt="Travel">
+                <div class="swiper-slide-content">
+                    <h2>Travel Adventures</h2>
+                    <p>Discover amazing destinations</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1494252713559-f26b4bf0b174" alt="Nature">
+                <div class="swiper-slide-content">
+                    <h2>Natural Wonders</h2>
+                    <p>Experience the beauty of nature</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
     </div>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav d-lg-none">
+    <!-- Blog Posts -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Blog Post 1 -->
+                <article class="blog-post">
+                    <div class="blog-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f" class="blog-image" alt="Technology">
+                    </div>
+                    <div class="blog-content">
+                        <a href="#" class="post-title">Future of Technology</a>
+                        <p class="post-description">How AI and machine learning are shaping our future. Discover the latest trends and innovations in the tech world. Explore the cutting-edge developments that are transforming industries and our daily lives.</p>
+                        <div class="post-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-clock"></i>
+                                <span>5 days ago</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-person"></i>
+                                <span>Jane Smith</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-chat"></i>
+                                <span>24 Comments</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-post">
+                    <div class="blog-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551410224-699683e15636" class="blog-image" alt="Travel">
+                    </div>
+                    <div class="blog-content">
+                        <a href="#" class="post-title">Hidden Gems of Europe</a>
+                        <p class="post-description">Discover lesser-known but amazing destinations in Europe. Explore the secret spots that tourists often miss and experience authentic local culture away from the crowds.</p>
+                        <div class="post-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-clock"></i>
+                                <span>1 week ago</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-person"></i>
+                                <span>Mike Johnson</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-chat"></i>
+                                <span>18 Comments</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-post">
+                    <div class="blog-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1494252713559-f26b4bf0b174" class="blog-image" alt="Nature">
+                    </div>
+                    <div class="blog-content">
+                        <a href="#" class="post-title">Exploring Nature's Beauty</a>
+                        <p class="post-description">A journey through the most beautiful landscapes on Earth. Experience breathtaking views and natural wonders that will leave you in awe of our planet's incredible diversity.</p>
+                        <div class="post-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-clock"></i>
+                                <span>2 weeks ago</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-person"></i>
+                                <span>John Doe</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-chat"></i>
+                                <span>32 Comments</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <a href="#" class="nav-link active">
-                        <i class="bi bi-speedometer2"></i>
-                        <span>Dashboard</span>
-                    </a>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>About BlogSpace</h5>
+                    <p>Sharing stories that matter. Join our community of writers and readers.</p>
                 </div>
-                <div class="col">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-grid"></i>
-                        <span>Components</span>
-                    </a>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Home</a></li>
+                        <li><a href="#" class="text-decoration-none">Blog</a></li>
+                        <li><a href="#" class="text-decoration-none">About</a></li>
+                        <li><a href="#" class="text-decoration-none">Contact</a></li>
+                    </ul>
                 </div>
-                <div class="col">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-bar-chart"></i>
-                        <span>Charts</span>
-                    </a>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
                 </div>
-                <div class="col">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-table"></i>
-                        <span>Tables</span>
-                    </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Post Modal -->
+    <div class="custom-modal" id="postModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <div class="modal-body">
+                <img src="/placeholder.svg" alt="" class="modal-image" id="modalImage">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-description" id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="custom-modal search-modal" id="searchModal">
+        <div class="modal-content">
+            <button class="modal-close" id="searchModalClose">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <div class="modal-body">
+                <h2 class="modal-title mb-4">Search BlogSpace</h2>
+                
+                <div class="search-input-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search for articles, topics, or #tags...">
+                    <i class="bi bi-search search-icon"></i>
                 </div>
-                <div class="col">
-                    <a href="#" class="nav-link" id="mobileMenuToggle">
-                        <i class="bi bi-three-dots"></i>
-                        <span>More</span>
-                    </a>
+                
+                <div class="search-suggestions">
+                    <h3 class="suggestion-title">Popular Topics</h3>
+                    <div class="suggestions-list">
+                        <div class="suggestion-item"><span class="hashtag">#</span>technology</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>travel</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>nature</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>food</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>photography</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>lifestyle</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>ai</div>
+                        <div class="suggestion-item"><span class="hashtag">#</span>design</div>
+                    </div>
+                    
+                    <div class="recent-searches">
+                        <h3 class="suggestion-title">Recent Searches</h3>
+                        <div class="recent-search-item">
+                            <div class="recent-search-text">
+                                <i class="bi bi-clock-history"></i>
+                                <span>mountain hiking tips</span>
+                            </div>
+                            <i class="bi bi-x recent-search-remove"></i>
+                        </div>
+                        <div class="recent-search-item">
+                            <div class="recent-search-text">
+                                <i class="bi bi-clock-history"></i>
+                                <span><span class="hashtag">#</span>sustainability</span>
+                            </div>
+                            <i class="bi bi-x recent-search-remove"></i>
+                        </div>
+                        <div class="recent-search-item">
+                            <div class="recent-search-text">
+                                <i class="bi bi-clock-history"></i>
+                                <span>AI image generation</span>
+                            </div>
+                            <i class="bi bi-x recent-search-remove"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Custom JavaScript -->
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Toggle sidebar on mobile
-        document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('show');
-            document.getElementById('sidebarOverlay').classList.toggle('show');
-        });
-        
-        // Close sidebar when clicking on overlay
-        document.getElementById('sidebarOverlay').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.remove('show');
-            document.getElementById('sidebarOverlay').classList.remove('show');
-        });
-        
-        // Mobile menu toggle
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('show');
-            document.getElementById('sidebarOverlay').classList.toggle('show');
-        });
-        
-        // Area Chart
-        const ctx = document.getElementById('myAreaChart').getContext('2d');
-        const myAreaChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Earnings',
-                    lineTension: 0.3,
-                    backgroundColor: 'rgba(58, 86, 228, 0.05)',
-                    borderColor: 'rgba(58, 86, 228, 1)',
-                    pointRadius: 3,
-                    pointBackgroundColor: 'rgba(58, 86, 228, 1)',
-                    pointBorderColor: 'rgba(58, 86, 228, 1)',
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: 'rgba(58, 86, 228, 1)',
-                    pointHoverBorderColor: 'rgba(58, 86, 228, 1)',
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-                }],
+        // Initialize Swiper
+        const swiper = new Swiper(".mySwiper", {
+            effect: "fade",
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
             },
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false,
-                            color: '#333333'
-                        },
-                        ticks: {
-                            maxTicksLimit: 7,
-                            color: '#b0b0b0'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            maxTicksLimit: 5,
-                            padding: 10,
-                            color: '#b0b0b0',
-                            callback: function(value) {
-                                return '$' + value;
-                            }
-                        },
-                        grid: {
-                            color: '#333333',
-                            drawBorder: false,
-                            borderDash: [2],
-                            zeroLineBorderDash: [2]
-                        }
-                    },
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: "#1e1e1e",
-                        bodyColor: "#b0b0b0",
-                        titleMarginBottom: 10,
-                        titleColor: '#ffffff',
-                        titleFontSize: 14,
-                        borderColor: '#333333',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        intersect: false,
-                        mode: 'index',
-                        caretPadding: 10,
-                        callbacks: {
-                            label: function(context) {
-                                var label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += '$' + context.parsed.y;
-                                }
-                                return label;
-                            }
-                        }
-                    }
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+
+        // Theme Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            const body = document.body;
+            
+            // Check saved theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            body.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateIcon(newTheme);
+            });
+            
+            function updateIcon(theme) {
+                if (theme === 'dark') {
+                    icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                } else {
+                    icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
                 }
             }
-        });
-        
-        // Pie Chart
-        const ctxPie = document.getElementById('myPieChart').getContext('2d');
-        const myPieChart = new Chart(ctxPie, {
-            type: 'doughnut',
-            data: {
-                labels: ['Direct', 'Social', 'Referral'],
-                datasets: [{
-                    data: [55, 30, 15],
-                    backgroundColor: ['#3a56e4', '#28a745', '#17a2b8'],
-                    hoverBackgroundColor: ['#2a46d4', '#218838', '#138496'],
-                    hoverBorderColor: '#1e1e1e',
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: "#1e1e1e",
-                        bodyColor: "#b0b0b0",
-                        borderColor: '#333333',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        caretPadding: 10,
+            
+            // Post Modal
+            const postModal = document.getElementById('postModal');
+            const modalClose = document.getElementById('modalClose');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+
+            // Function to open post modal
+            function openPostModal(image, title, description) {
+                modalImage.src = image;
+                modalTitle.textContent = title;
+                modalDescription.textContent = description;
+                postModal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+
+            // Function to close post modal
+            function closePostModal() {
+                postModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+
+            // Add click event to all blog posts
+            document.querySelectorAll('.blog-post').forEach(post => {
+                post.addEventListener('click', function(e) {
+                    // Don't open modal if clicking on links or meta items
+                    if (e.target.closest('.post-meta') || e.target.closest('a')) return;
+                    
+                    const image = post.querySelector('.blog-image').src;
+                    const title = post.querySelector('.post-title').textContent;
+                    const description = post.querySelector('.post-description').textContent;
+                    openPostModal(image, title, description);
+                });
+            });
+
+            // Close post modal when clicking close button
+            modalClose.addEventListener('click', closePostModal);
+
+            // Close post modal when clicking outside
+            postModal.addEventListener('click', function(e) {
+                if (e.target === postModal) {
+                    closePostModal();
+                }
+            });
+
+            // Search Modal
+            const searchToggle = document.getElementById('searchToggle');
+            const searchModal = document.getElementById('searchModal');
+            const searchModalClose = document.getElementById('searchModalClose');
+            const searchInput = document.getElementById('searchInput');
+            const suggestionItems = document.querySelectorAll('.suggestion-item');
+            const recentSearchItems = document.querySelectorAll('.recent-search-item');
+            const recentSearchRemove = document.querySelectorAll('.recent-search-remove');
+
+            // Open search modal
+            searchToggle.addEventListener('click', function() {
+                searchModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 300);
+            });
+
+            // Close search modal
+            function closeSearchModal() {
+                searchModal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            searchModalClose.addEventListener('click', closeSearchModal);
+
+            // Close search modal when clicking outside
+            searchModal.addEventListener('click', function(e) {
+                if (e.target === searchModal) {
+                    closeSearchModal();
+                }
+            });
+
+            // Process hashtags in search input
+            searchInput.addEventListener('input', function(e) {
+                const value = e.target.value;
+                if (value.includes('#')) {
+                    // Highlight hashtags or add suggestions
+                    console.log('Hashtag detected:', value);
+                    // Here you could add real-time hashtag highlighting
+                }
+            });
+
+            // Handle search suggestion clicks
+            suggestionItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const text = item.textContent.trim();
+                    searchInput.value = text;
+                    searchInput.focus();
+                });
+            });
+
+            // Handle recent search item clicks
+            recentSearchItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('recent-search-remove')) {
+                        const text = item.querySelector('span:not(.hashtag)').textContent.trim();
+                        searchInput.value = text;
+                        searchInput.focus();
                     }
-                },
-                cutout: '70%',
-            },
+                });
+            });
+
+            // Remove recent search items
+            recentSearchRemove.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const item = this.closest('.recent-search-item');
+                    item.style.opacity = 0;
+                    setTimeout(() => {
+                        item.remove();
+                    }, 300);
+                });
+            });
+
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (searchModal.classList.contains('show')) {
+                searchModal.classList.remove('show');
+            }
+            if (modal.classList.contains('show')) {
+                closeModal();
+            }
+        }
+    });
+
         });
     </script>
-</body>
-</html>
+        <div class="custom-modal" id="postModal">
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <div class="modal-body">
+                    <img src="/placeholder.svg" alt="" class="modal-image" id="modalImage">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <p class="modal-description" id="modalDescription"></p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
