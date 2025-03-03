@@ -7,3 +7,11 @@ CREATE TABLE carousel (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Post table
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_url VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content LONGTEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,17 +1,45 @@
 <?php
+// Start output buffering at the very beginning
+ob_start();
+
 include_once './includes/__heeader__.php';
 include_once './includes/__navbar__.php';
+include_once '../server/dbcon.php';
+
+$successMessage = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['blogTitle'];
+    $content = $_POST['content'];
+    $image = $_FILES['blogImage'];
+
+    if ($image['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = '../uploads/';
+        $imageName = uniqid() . '_' . basename($image['name']);
+        $imagePath = $uploadDir . $imageName;
+        if (move_uploaded_file($image['tmp_name'], $imagePath)) {
+            $stmt = $pdo->prepare("INSERT INTO posts (image_url, title, content) VALUES (?, ?, ?)");
+            $stmt->execute([$imagePath, $title, $content]);
+            // Set success message
+            $successMessage = 'Blog post added successfully!';
+            // Redirect to blog.php after successful insertion
+            header("Location: ./blog.php");
+            ob_end_flush(); // Flush the buffer before exit
+            exit(); // Important to prevent further execution
+        } else {
+            echo "Failed to move uploaded file.";
+        }
+    }
+}
+
 ?>
 
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="card shadow-lg">
-                <!-- <div class="card-header bg-gradient-primary text-white">
-                    <h1 class="h3 mb-0">Add New Blog Post</h1>
-                </div> -->
                 <div class="card-body">
-                    <form id="newBlogForm" enctype="multipart/form-data">
+                    <form id="newBlogForm" method="post" enctype="multipart/form-data">
                         <div class="mb-4">
                             <label for="blogTitle" class="form-label">Title</label>
                             <input type="text" class="form-control form-control-lg" id="blogTitle" name="blogTitle" required>
@@ -35,6 +63,19 @@ include_once './includes/__navbar__.php';
     </div>
 </div>
 
+<?php if ($successMessage): ?>
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <?= $successMessage ?>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <style>
     :root {
         --primary-color: #4e73df;
@@ -44,12 +85,10 @@ include_once './includes/__navbar__.php';
         --info-color: #36b9cc;
         --warning-color: #f6c23e;
         --danger-color: #e74a3b;
-        /* --light-color: #f8f9fc; */
         --dark-color: #5a5c69;
     }
 
     body {
-        /* background-color: #f8f9fc; */
         color: #5a5c69;
     }
 
@@ -62,15 +101,6 @@ include_once './includes/__navbar__.php';
         border: none;
         border-radius: 0.75rem;
         overflow: hidden;
-    }
-
-    .card-header {
-        border-bottom: none;
-        padding: 1.5rem;
-    }
-
-    .bg-gradient-primary {
-        background: linear-gradient(87deg, var(--primary-color) 0, var(--primary-dark) 100%) !important;
     }
 
     .card-body {
@@ -160,15 +190,6 @@ include_once './includes/__navbar__.php';
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
-
-        $('#newBlogForm').on('submit', function(e) {
-            e.preventDefault();
-            var content = $('#summernote').summernote('code');
-            console.log('Form submitted');
-            console.log('Title:', $('#blogTitle').val());
-            console.log('Content:', content);
-            // Here you would typically send the data to your server
-        });
     });
 
     function previewImage(event) {
@@ -182,5 +203,8 @@ include_once './includes/__navbar__.php';
     }
 </script>
 
-<?php include_once './includes/__footer__.php'; ?>
-
+<?php 
+include_once './includes/__footer__.php'; 
+// Flush any remaining content
+if (ob_get_length()) ob_end_flush();
+?>
