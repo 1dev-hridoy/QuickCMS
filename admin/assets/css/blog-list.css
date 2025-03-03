@@ -1,0 +1,124 @@
+    /* Custom styles */
+    :root {
+        --primary-color: #4e73df;
+        --secondary-color: #858796;
+        --success-color: #1cc88a;
+        --info-color: #36b9cc;
+        --warning-color: #f6c23e;
+        --danger-color: #e74a3b;
+        /* --light-color: #f8f9fc; */
+        --dark-color: #5a5c69;
+    }
+
+    body {
+        /* background-color: #f8f9fc; */
+        color: #5a5c69;
+    }
+
+    .container-fluid {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 0.35rem;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .custom-table {
+        border-collapse: separate;
+        border-spacing: 0 0.5rem;
+    }
+
+    .custom-table thead th {
+        background-color: var(--light-color);
+        border: none;
+        color: var(--primary-color);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.75rem;
+    }
+
+    .custom-table tbody tr {
+        /* background-color: #ffffff; */
+        box-shadow: 0 0.15rem 0.3rem rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .custom-table tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-table td {
+        border: none;
+        padding: 1rem 0.75rem;
+        vertical-align: middle;
+    }
+
+    .category-badge {
+        background-color: var(--info-color);
+        color: #ffffff;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .btn-outline-primary, .btn-outline-danger {
+        border-width: 2px;
+    }
+
+    .btn-outline-primary:hover, .btn-outline-danger:hover {
+        color: #ffffff;
+    }
+
+    .pagination .page-link {
+        color: var(--primary-color);
+        border: none;
+        margin: 0 0.2rem;
+        border-radius: 0.25rem;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .modal-content {
+        border: none;
+        border-radius: 0.5rem;
+    }
+
+    .modal-header {
+        background-color: var(--primary-color);
+        color: #ffffff;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    .modal-title {
+        font-weight: 600;
+    }
+
+    .btn-close {
+        color: #ffffff;
+    }
+
+    .form-label {
+        font-weight: 500;
+    }
+
+    .form-control, .form-select {
+        border-radius: 0.25rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+    }

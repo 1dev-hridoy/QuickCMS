@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Admin Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/main.styl.css">
+</head>
+<body>
+    <!-- Overlay for mobile sidebar -->
+    <div class="overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="bi bi-lightning-charge-fill lightning"></i>Admin Panel</h3>
+        </div>
+        
+        <div class="sidebar-heading">Core</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-heading">Interface</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-grid"></i>
+                    <span>Components</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-tools"></i>
+                    <span>Utilities</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-heading">Addons</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-file-earmark"></i>
+                    <span>Pages</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Charts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-table"></i>
+                    <span>Tables</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button id="sidebarToggle" class="navbar-toggler" type="button">
+                    <i class="bi bi-list"></i>
+                </button>
+                <a class="navbar-brand" href="#"><i class="bi bi-lightning-charge-fill"></i> Admin Panel</a>
+                <div class="ms-auto d-flex align-items-center">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid p-4 content-main">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0">Dashboard</h1>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="bi bi-download me-1"></i> Generate Report
+                </a>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row">
+                <!-- Earnings (Monthly) Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card primary h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="text-xs text-uppercase mb-1 text-primary">Earnings (Monthly)</div>
+                                    <div class="h5 mb-0 font-weight-bold">$40,000</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-calendar stat-icon text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Annual) Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card success h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="text-xs text-uppercase mb-1 text-success">Earnings (Annual)</div>
+                                    <div class="h5 mb-0 font-weight-bold">$215,000</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-currency-dollar stat-icon text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card info h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="text-xs text-uppercase mb-1 text-info">Tasks</div>
+                                    <div class="h5 mb-0 font-weight-bold">50%</div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-list-check stat-icon text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Requests Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card warning h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="text-xs text-uppercase mb-1 text-warning">Pending Requests</div>
+                                    <div class="h5 mb-0 font-weight-bold">18</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-chat-left-text stat-icon text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+                <!-- Area Chart -->
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="m-0 font-weight-bold">Earnings Overview</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas id="myAreaChart" height="320"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="m-0 font-weight-bold">Revenue Sources</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-pie pt-4 pb-2">
+                                <canvas id="myPieChart" height="245"></canvas>
+                            </div>
+                            <div class="mt-4 text-center small">
+                                <span class="me-2">
+                                    <i class="bi bi-circle-fill text-primary"></i> Direct
+                                </span>
+                                <span class="me-2">
+                                    <i class="bi bi-circle-fill text-success"></i> Social
+                                </span>
+                                <span class="me-2">
+                                    <i class="bi bi-circle-fill text-info"></i> Referral
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+                <!-- Projects Card -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="m-0 font-weight-bold">Projects</h6>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="small font-weight-bold">Server Migration <span class="float-end">20%</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small font-weight-bold">Sales Tracking <span class="float-end">40%</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small font-weight-bold">Customer Database <span class="float-end">60%</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small font-weight-bold">Payout Details <span class="float-end">80%</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small font-weight-bold">Account Setup <span class="float-end">Complete!</span></h4>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="m-0 font-weight-bold">Recent Activities</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td><span class="badge bg-warning">Pending</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox</td>
+                                            <td>Junior Technical Author</td>
+                                            <td>San Francisco</td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cedric Kelly</td>
+                                            <td>Senior Javascript Developer</td>
+                                            <td>Edinburgh</td>
+                                            <td><span class="badge bg-danger">Inactive</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Airi Satou</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <span>Copyright &copy; Your Website 2023</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav d-lg-none">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <a href="#" class="nav-link active">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-grid"></i>
+                        <span>Components</span>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-bar-chart"></i>
+                        <span>Charts</span>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-table"></i>
+                        <span>Tables</span>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link" id="mobileMenuToggle">
+                        <i class="bi bi-three-dots"></i>
+                        <span>More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        });
+        
+        // Close sidebar when clicking on overlay
+        document.getElementById('sidebarOverlay').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('show');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        });
+        
+        // Area Chart
+        const ctx = document.getElementById('myAreaChart').getContext('2d');
+        const myAreaChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Earnings',
+                    lineTension: 0.3,
+                    backgroundColor: 'rgba(58, 86, 228, 0.05)',
+                    borderColor: 'rgba(58, 86, 228, 1)',
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgba(58, 86, 228, 1)',
+                    pointBorderColor: 'rgba(58, 86, 228, 1)',
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: 'rgba(58, 86, 228, 1)',
+                    pointHoverBorderColor: 'rgba(58, 86, 228, 1)',
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false,
+                            color: '#333333'
+                        },
+                        ticks: {
+                            maxTicksLimit: 7,
+                            color: '#b0b0b0'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            color: '#b0b0b0',
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        },
+                        grid: {
+                            color: '#333333',
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: "#1e1e1e",
+                        bodyColor: "#b0b0b0",
+                        titleMarginBottom: 10,
+                        titleColor: '#ffffff',
+                        titleFontSize: 14,
+                        borderColor: '#333333',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        intersect: false,
+                        mode: 'index',
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += '$' + context.parsed.y;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Pie Chart
+        const ctxPie = document.getElementById('myPieChart').getContext('2d');
+        const myPieChart = new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Direct', 'Social', 'Referral'],
+                datasets: [{
+                    data: [55, 30, 15],
+                    backgroundColor: ['#3a56e4', '#28a745', '#17a2b8'],
+                    hoverBackgroundColor: ['#2a46d4', '#218838', '#138496'],
+                    hoverBorderColor: '#1e1e1e',
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: "#1e1e1e",
+                        bodyColor: "#b0b0b0",
+                        borderColor: '#333333',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                    }
+                },
+                cutout: '70%',
+            },
+        });
+    </script>
+</body>
+</html>
