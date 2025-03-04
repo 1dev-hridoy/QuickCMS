@@ -33,9 +33,6 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button class="search-toggle" id="searchToggle">
-                        <i class="bi bi-search"></i>
-                    </button>
                     <button class="theme-toggle" id="themeToggle">
                         <i class="bi bi-moon-fill"></i>
                     </button>
