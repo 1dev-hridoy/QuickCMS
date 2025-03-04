@@ -1,0 +1,461 @@
+:root {
+    --dark-bg: #0f172a;
+    --light-bg: #ffffff;
+    --dark-text: #1e293b;
+    --light-text: #f8fafc;
+    --primary-color: #3b82f6;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] {
+    --bg-color: var(--dark-bg);
+    --text-color: var(--light-text);
+    --nav-glass: rgba(15, 23, 42, 0.7);
+}
+
+[data-theme="light"] {
+    --bg-color: var(--light-bg);
+    --text-color: var(--dark-text);
+    --nav-glass: rgba(255, 255, 255, 0.7);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+}
+
+/* Glassmorphic Navbar */
+.navbar {
+    background: var(--nav-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand, .nav-link {
+    color: var(--text-color) !important;
+}
+
+/* Theme Toggle Button */
+.theme-toggle, .search-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+.theme-toggle:hover, .search-toggle:hover {
+    transform: rotate(45deg);
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Swiper Styles */
+.swiper {
+    width: 100%;
+    height: 60vh;
+    margin-bottom: 2rem;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper-slide-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+}
+
+/* Blog Post List */
+.blog-post {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    gap: 2rem;
+    align-items: start;
+    cursor: pointer; /* Added cursor style */
+}
+
+.blog-post:hover .blog-image {
+    transform: scale(1.05); /* Added hover effect */
+}
+
+.blog-post:last-child {
+    border-bottom: none;
+}
+
+.blog-image-wrapper {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.blog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.blog-content {
+    flex: 1;
+    min-width: 0; /* Prevents text overflow issues */
+}
+
+.post-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+}
+
+.post-title:hover {
+    color: var(--primary-color);
+}
+
+.post-description {
+    color: var(--text-color);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    font-size: 0.875rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Footer */
+footer {
+    background: var(--nav-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--glass-border);
+    padding: 3rem 0;
+    margin-top: 3rem;
+}
+
+.social-links a {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .swiper {
+        height: 40vh;
+    }
+
+    .blog-post {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    .blog-image-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+
+    .post-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-description {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .post-meta {
+        font-size: 0.8rem;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .blog-post {
+        gap: 1rem;
+    }
+
+    .blog-image-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .post-meta {
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+    }
+}
+
+/* Modal Styles */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.custom-modal.show {
+    opacity: 1;
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-color);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border: 1px solid var(--glass-border);
+}
+
+.custom-modal.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg);
+    background: #ef4444;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.modal-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.modal-description {
+    color: var(--text-color);
+    opacity: 0.8;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Search Modal Styles */
+.search-modal .modal-content {
+    max-width: 600px;
+}
+
+.search-input-container {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    border-radius: 50px;
+    border: 2px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+.search-suggestions {
+    margin-top: 1.5rem;
+}
+
+.suggestion-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.suggestion-item {
+    padding: 0.5rem 1rem;
+    background: var(--glass-bg);
+    border-radius: 50px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.hashtag {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.recent-searches {
+    margin-top: 2rem;
+}
+
+.recent-search-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--glass-border);
+    cursor: pointer;
+}
+
+.recent-search-item:hover {
+    color: var(--primary-color);
+}
+
+.recent-search-item:last-child {
+    border-bottom: none;
+}
+
+.recent-search-text {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.recent-search-remove {
+    color: var(--text-color);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.recent-search-remove:hover {
+    color: #ef4444;
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+    }
+
+    .modal-image {
+        height: 300px;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-description {
+        font-size: 1rem;
+    }
+
+    .modal-close {
+        top: 10px;
+        right: 10px;
+    }
+}
