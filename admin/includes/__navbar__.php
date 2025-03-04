@@ -1,4 +1,14 @@
-    <!-- Content Wrapper -->
+<?php
+include_once '../server/dbcon.php';
+
+// Fetch existing settings data from the database
+$stmt = $pdo->query("SELECT * FROM settings LIMIT 1");
+$settings = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Initialize variable for title
+$title = $settings['name'] ?? '';
+?>
+<!-- Content Wrapper -->
     <div class="content-wrapper">
         <!-- Top Navbar -->
         <nav class="navbar navbar-expand-lg">
@@ -6,7 +16,7 @@
                 <button id="sidebarToggle" class="navbar-toggler" type="button">
                     <i class="bi bi-list"></i>
                 </button>
-                <a id="gradient-text" class="navbar-brand" href="#"><i class="fa-solid fa-crown"></i>  TestNet KING</a>
+                <a id="gradient-text" class="navbar-brand" href="#"><i class="fa-solid fa-crown"></i> <?= htmlspecialchars($title) ?></a>
                 <div class="ms-auto d-flex align-items-center">
                     <div class="dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">

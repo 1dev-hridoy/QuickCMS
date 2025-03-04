@@ -1,7 +1,17 @@
-        <!-- Footer -->
+<?php
+include_once '../server/dbcon.php';
+
+// Fetch existing settings data from the database
+$stmt = $pdo->query("SELECT * FROM settings LIMIT 1");
+$settings = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Initialize variable for title
+$title = $settings['name'] ?? 'Your Website';
+?>
+ <!-- Footer -->
         <footer>
             <div class="container">
-                <span>Copyright &copy; Your Website 2023</span>
+                <span>Copyright &copy; <?= htmlspecialchars($title) ?> <?= date('Y') ?></span>
             </div>
         </footer>
     </div>
