@@ -1,0 +1,15 @@
+{
+    "name": "user/off-blog",
+    "autoload": {
+        "psr-4": {
+            "User\\OffBlog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hridoy",
+            "email": "154232641+1dev-hridoy@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}

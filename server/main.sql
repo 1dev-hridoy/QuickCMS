@@ -15,3 +15,10 @@ CREATE TABLE posts (
     content LONGTEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- Website visitor table
+CREATE TABLE website_visitors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL
+);

@@ -1,13 +1,32 @@
 <?php
 include_once './includes/__heeader__.php';
 include_once './includes/__navbar__.php';
+include_once '../server/dbcon.php';
+
+// Initialize variables to prevent undefined variable warnings
+$months = [];
+$visitors = [];
+
+// Get monthly visitor data for chart
+$stmt = $pdo->query("SELECT 
+    DATE_FORMAT(date, '%Y-%m') as month, 
+    COUNT(*) as monthly_visitors 
+    FROM website_visitors 
+    GROUP BY month 
+    ORDER BY month DESC 
+    LIMIT 12");
+$monthlyVisitorData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Prepare data for Chart.js
+foreach ($monthlyVisitorData as $data) {
+    $months[] = $data['month'];
+    $visitors[] = $data['monthly_visitors'];
+}
 ?>
+
 <div class="dashboard-container">
     <div class="dashboard-header">
         <h1 class="dashboard-title">Statistics Dashboard</h1>
-        <a href="#" class="btn btn-primary btn-report">
-            <i class="bi bi-download me-2"></i> Generate Report
-        </a>
     </div>
 
     <!-- Advanced Filter Options -->
@@ -44,15 +63,6 @@ include_once './includes/__navbar__.php';
             </div>
             <canvas id="siteVisitorChart"></canvas>
         </div>
-        <div class="chart-wrapper">
-            <div class="chart-legend">
-                <span class="legend-item post-visitors">
-                    <span class="legend-color"></span>
-                    Post Visitors
-                </span>
-            </div>
-            <canvas id="postVisitorChart"></canvas>
-        </div>
     </div>
 </div>
 
@@ -60,7 +70,6 @@ include_once './includes/__navbar__.php';
 /* Custom Dashboard Styling */
 :root {
     --chart-site-visitors: #ff6384;
-    --chart-post-visitors: #36a2eb;
     --dashboard-bg: #121212;
     --card-bg: #1e1e1e;
     --text-color: #ffffff;
@@ -93,16 +102,6 @@ body {
     color: var(--text-color);
 }
 
-.btn-report {
-    background-color: #4e73df;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    border-radius: 0.25rem;
-    display: flex;
-    align-items: center;
-}
-
 .filter-controls {
     display: flex;
     gap: 1rem;
@@ -132,7 +131,7 @@ body {
 
 .charts-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
@@ -170,10 +169,6 @@ body {
     background-color: var(--chart-site-visitors);
 }
 
-.post-visitors .legend-color {
-    background-color: var(--chart-post-visitors);
-}
-
 /* Responsive adjustments */
 @media (max-width: 992px) {
     .charts-container {
@@ -207,39 +202,21 @@ canvas {
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const ctxSiteVisitor = document.getElementById('siteVisitorChart').getContext('2d');
-        const ctxPostVisitor = document.getElementById('postVisitorChart').getContext('2d');
-        
+
         // Set Chart.js defaults for dark theme
         Chart.defaults.color = '#adb5bd';
         Chart.defaults.scale.grid.color = 'rgba(255, 255, 255, 0.05)';
         Chart.defaults.scale.grid.zeroLineColor = 'rgba(255, 255, 255, 0.1)';
-        
-        // Dummy data for demonstration
+
         let siteVisitorData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: <?= json_encode($months) ?>,
             datasets: [{
                 label: 'Site Visitors',
-                data: [100, 150, 200, 250, 300, 350],
+                data: <?= json_encode($visitors) ?>,
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 2,
                 pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                pointBorderColor: '#fff',
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                tension: 0.4
-            }]
-        };
-
-        let postVisitorData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Post Visitors',
-                data: [20, 30, 40, 50, 60, 70],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2,
-                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
                 pointBorderColor: '#fff',
                 pointRadius: 5,
                 pointHoverRadius: 7,
@@ -295,71 +272,56 @@ canvas {
             options: chartOptions
         });
 
-        let postVisitorChart = new Chart(ctxPostVisitor, {
-            type: 'line',
-            data: postVisitorData,
-            options: chartOptions
-        });
-
         // Filter functionality
         document.getElementById('filterSelect').addEventListener('change', function(e) {
             const filterValue = e.target.value;
             // Update chart data based on filter selection
             if (filterValue === 'day') {
-                siteVisitorData.labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                siteVisitorData.datasets[0].data = [50, 60, 70, 80, 90, 100];
-                postVisitorData.labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                postVisitorData.datasets[0].data = [5, 6, 7, 8, 9, 10];
+                fetchVisitorData('day').then(data => updateChart(siteVisitorChart, data));
             } else if (filterValue === 'week') {
-                siteVisitorData.labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
-                siteVisitorData.datasets[0].data = [200, 250, 300, 350, 400, 450];
-                postVisitorData.labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
-                postVisitorData.datasets[0].data = [20, 25, 30, 35, 40, 45];
+                fetchVisitorData('week').then(data => updateChart(siteVisitorChart, data));
             } else if (filterValue === 'month') {
-                siteVisitorData.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-                siteVisitorData.datasets[0].data = [100, 150, 200, 250, 300, 350];
-                postVisitorData.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-                postVisitorData.datasets[0].data = [20, 30, 40, 50, 60, 70];
+                fetchVisitorData('month').then(data => updateChart(siteVisitorChart, data));
             }
-
-            siteVisitorChart.update();
-            postVisitorChart.update();
         });
 
         document.getElementById('chartTypeSelect').addEventListener('change', function(e) {
             const chartType = e.target.value;
-            if (chartType === 'bar') {
-                siteVisitorChart.config.type = 'bar';
-                postVisitorChart.config.type = 'bar';
-            } else if (chartType === 'line') {
-                siteVisitorChart.config.type = 'line';
-                postVisitorChart.config.type = 'line';
-            }
-
+            siteVisitorChart.config.type = chartType;
             siteVisitorChart.update();
-            postVisitorChart.update();
         });
+
+        async function fetchVisitorData(filter) {
+            const response = await fetch(`./dashboard.php?filter=${filter}`);
+            return await response.json();
+        }
+
+        function updateChart(chart, data) {
+            chart.data.labels = data.labels;
+            chart.data.datasets[0].data = data.visitors;
+            chart.update();
+        }
 
         // Date range functionality
         document.getElementById('startDate').addEventListener('change', function(e) {
-            console.log('Start Date:', e.target.value);
-            // Implement logic to update charts based on start date
+            fetchVisitorDataByDateRange().then(data => updateChart(siteVisitorChart, data));
         });
 
         document.getElementById('endDate').addEventListener('change', function(e) {
-            console.log('End Date:', e.target.value);
-            // Implement logic to update charts based on end date
+            fetchVisitorDataByDateRange().then(data => updateChart(siteVisitorChart, data));
         });
-        
-        // Set default chart type to line
-        document.getElementById('chartTypeSelect').value = 'line';
-        
+
+        async function fetchVisitorDataByDateRange() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const response = await fetch(`./dashboard.php?start_date=${startDate}&end_date=${endDate}`);
+            return await response.json();
+        }
+
         // Ensure charts resize properly when window is resized
         window.addEventListener('resize', function() {
             siteVisitorChart.resize();
-            postVisitorChart.resize();
         });
     });
 </script>
 <?php include_once './includes/__footer__.php'; ?>
-
