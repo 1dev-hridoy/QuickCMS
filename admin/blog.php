@@ -35,7 +35,7 @@ $posts = $stmt->fetchAll();
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover custom-table">
+                <table class="table table custom-table">
                     <thead>
                         <tr>
                             <th>Image</th>
