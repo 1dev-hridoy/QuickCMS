@@ -18,30 +18,24 @@ $title = $settings['name'] ?? 'Your Website';
 
 
     </div>
-    <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js -->
     <script src="../assets/js/chart.js"></script>
 <script>
-           // Toggle sidebar on mobile
            document.getElementById('sidebarToggle').addEventListener('click', function() {
         document.getElementById('sidebar').classList.toggle('show');
         document.getElementById('sidebarOverlay').classList.toggle('show');
     });
     
-    // Close sidebar when clicking on overlay
     document.getElementById('sidebarOverlay').addEventListener('click', function() {
         document.getElementById('sidebar').classList.remove('show');
         document.getElementById('sidebarOverlay').classList.remove('show');
     });
     
-    // Mobile menu toggle
     document.getElementById('mobileMenuToggle').addEventListener('click', function() {
         document.getElementById('sidebar').classList.toggle('show');
         document.getElementById('sidebarOverlay').classList.toggle('show');
     });
     
-    // Area Chart
     const ctx = document.getElementById('myAreaChart').getContext('2d');
     const myAreaChart = new Chart(ctx, {
         type: 'line',
