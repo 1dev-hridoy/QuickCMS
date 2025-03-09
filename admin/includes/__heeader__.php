@@ -1,5 +1,6 @@
 <?php
 include_once '../server/dbcon.php';
+include_once '__auth__check.php';
 
 // Fetch existing settings data from the database
 $stmt = $pdo->query("SELECT * FROM settings LIMIT 1");
