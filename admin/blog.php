@@ -26,7 +26,7 @@ $posts = $stmt->fetchAll();
             <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#searchModal">
                 <i class="bi bi-search me-1"></i> Search
             </button>
-            <a href="add_post.php" class="btn btn-success">
+            <a href="new-post.php" class="btn btn-success">
                 <i class="bi bi-plus-lg me-1"></i> Add New Post
             </a>
         </div>
