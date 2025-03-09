@@ -79,4 +79,13 @@ $description = $settings['description'] ?? '';
                 </a>
             </li>
         </ul>
+        <div class="sidebar-heading">Settings</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="./settings.php">
+                <i class="bi bi-gear"></i>
+                    <span>SEO</span>
+                </a>
+            </li>
+        </ul>
     </div>

@@ -13,10 +13,18 @@
     <link rel="stylesheet" href="./assets/css/data.style.main.css">
 </head>
 <body data-theme="dark">
+    <?php
+    include_once './server/dbcon.php';
+
+    // Fetch settings from the database
+    $stmt = $pdo->query("SELECT * FROM settings LIMIT 1");
+    $settings = $stmt->fetch();
+    ?>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">BlogSpace</a>
+            <a class="navbar-brand" href="#"><?= htmlspecialchars($settings['name']) ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
