@@ -9,6 +9,9 @@ $settings = $stmt->fetch(PDO::FETCH_ASSOC);
 // Initialize variables for title and description
 $title = $settings['name'] ?? 'Dark Admin Dashboard';
 $description = $settings['description'] ?? '';
+
+// Get the current script name
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -36,12 +39,11 @@ $description = $settings['description'] ?? '';
         <div class="sidebar-header">
             <h3 id="gradient-text"><i class="fa-solid fa-crown"></i> <?= htmlspecialchars($title) ?></h3>
         </div>
-    
         
         <div class="sidebar-heading">Core</div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="./">
+                <a class="nav-link <?= $current_page == 'index.php' ? 'active' : '' ?>" href="./">
                     <i class="bi bi-speedometer2"></i>
                     <span>Dashboard</span>
                 </a>
@@ -51,15 +53,15 @@ $description = $settings['description'] ?? '';
         <div class="sidebar-heading">Pages</div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="./blog.php">
+                <a class="nav-link <?= $current_page == 'blog.php' ? 'active' : '' ?>" href="./blog.php">
                     <i class="bi bi-grid"></i>
                     <span>Posts</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="carousel.php">
-                <i class="bi bi-images"></i>
-                    <span>Carousel </span>
+                <a class="nav-link <?= $current_page == 'carousel.php' ? 'active' : '' ?>" href="carousel.php">
+                    <i class="bi bi-images"></i>
+                    <span>Carousel</span>
                 </a>
             </li>
         </ul>
@@ -67,25 +69,28 @@ $description = $settings['description'] ?? '';
         <div class="sidebar-heading">Statistics</div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="./statistics.php">
+                <a class="nav-link <?= $current_page == 'statistics.php' ? 'active' : '' ?>" href="./statistics.php">
                     <i class="bi bi-bar-chart"></i>
                     <span>Charts</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./system.php">
-                <i class="bi bi-hdd-stack"></i>
+                <a class="nav-link <?= $current_page == 'system.php' ? 'active' : '' ?>" href="./system.php">
+                    <i class="bi bi-hdd-stack"></i>
                     <span>System</span>
                 </a>
             </li>
         </ul>
+        
         <div class="sidebar-heading">Settings</div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="./settings.php">
-                <i class="bi bi-gear"></i>
+                <a class="nav-link <?= $current_page == 'settings.php' ? 'active' : '' ?>" href="./settings.php">
+                    <i class="bi bi-gear"></i>
                     <span>SEO</span>
                 </a>
             </li>
         </ul>
     </div>
+</body>
+</html>
